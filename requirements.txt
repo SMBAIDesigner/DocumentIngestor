@@ -1,0 +1,7 @@
+PyMuPDF
+pdfplumber
+transformers
+sentence-transformers
+psycopg2-binary
+pytesseract
+Pillow 
