@@ -98,3 +98,6 @@ data/processed_markdown/
 
 # Taskmaster files
 .taskmaster/ 
+
+# local data
+/data/pdf
