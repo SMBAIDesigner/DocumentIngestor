@@ -9,8 +9,8 @@ load_dotenv()
 
 OLLAMA_API_URL = os.getenv('OLLAMA_API_URL')
 OLLAMA_MODEL = os.getenv('OLLAMA_MODEL')
-INPUT_DIR = os.getenv('INPUT_DIR')
-OUTPUT_DIR = os.getenv('OUTPUT_DIR')
+MARKDOWN_DIR = os.getenv('MARKDOWN_DIR')
+SUMMARIZE_DIR = os.getenv('SUMMARIZE_DIR')
 SUMMARY_MAX_LENGTH = int(os.getenv('SUMMARY_MAX_LENGTH', 200))
 
 def summarize_with_ollama(text):
@@ -79,13 +79,13 @@ def process_all_documents():
     """
     Read all Markdown files, generate summaries for each file, and save them to the output directory.
     """
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
-        print(f"Created output directory: {OUTPUT_DIR}")
+    if not os.path.exists(SUMMARIZE_DIR):
+        os.makedirs(SUMMARIZE_DIR)
+        print(f"Created output directory: {SUMMARIZE_DIR}")
 
-    markdown_files = glob.glob(os.path.join(INPUT_DIR, '*.md'))
+    markdown_files = glob.glob(os.path.join(MARKDOWN_DIR, '*.md'))
     if not markdown_files:
-        print(f"No Markdown files found in directory {INPUT_DIR}.")
+        print(f"No Markdown files found in directory {MARKDOWN_DIR}.")
         return
 
     print(f"Found {len(markdown_files)} Markdown files to process.")
@@ -104,7 +104,7 @@ def process_all_documents():
 
             summary = summarize_with_ollama(content)
             
-            output_filepath = os.path.join(OUTPUT_DIR, filename)
+            output_filepath = os.path.join(SUMMARIZE_DIR, filename)
             with open(output_filepath, 'w', encoding='utf-8') as f:
                 f.write(summary)
             

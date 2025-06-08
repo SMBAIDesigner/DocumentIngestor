@@ -2,6 +2,9 @@ import os
 import pdfplumber
 import pytesseract
 from PIL import Image
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def convert_pdf_to_md(pdf_path, output_dir):
     """
@@ -71,8 +74,12 @@ def batch_convert_pdfs(input_dir, output_dir):
     print("\nBatch conversion complete.")
 
 if __name__ == "__main__":
-    # Define the input and output directories as requested.
-    pdf_input_directory = r"D:\Dev\SMBV2\DocumentIngestor\data\pdf"
-    markdown_output_directory = r"D:\Dev\SMBV2\DocumentIngestor\data\markdown"
+    # Get paths from environment variables
+    pdf_input_directory = os.getenv('PDF_DIR')
+    markdown_output_directory = os.getenv('MARKDOWN_DIR')
+
+    if not pdf_input_directory or not markdown_output_directory:
+        print("Error: Required environment variables PDF_INPUT_DIRECTORY and MARKDOWN_OUTPUT_DIRECTORY must be set")
+        exit(1)
 
     batch_convert_pdfs(pdf_input_directory, markdown_output_directory)
