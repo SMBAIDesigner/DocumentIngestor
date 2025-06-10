@@ -1,79 +1,98 @@
-# TaskMaster-AI PDF Processing
+# Document Ingestor
 
-This project provides a pipeline to process a directory of PDF files. It extracts the text, generates an AI-powered summary, converts the summary into a vector embedding, and stores all the information in a PostgreSQL database with vector support.
+A Python-based document processing system that converts PDF documents to markdown format and provides document analysis capabilities.
+
+## Features
+
+- PDF to Markdown conversion
+- OCR support for image-based PDFs
+- Document text extraction
+- Environment-based configuration
+
+## Prerequisites
+
+- Python 3.13 or higher
+- Tesseract OCR (for OCR functionality)
+- PostgreSQL (for database operations)
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone [repository-url]
+cd DocumentIngestor
+```
+
+2. Create and activate a virtual environment:
+```bash
+python -m venv .venv
+# On Windows
+.venv\Scripts\activate
+# On Unix or MacOS
+source .venv/bin/activate
+```
+
+3. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+4. Create a `.env` file in the project root with the following variables:
+```env
+PDF_INPUT_DIRECTORY=path/to/pdf/input
+MARKDOWN_OUTPUT_DIRECTORY=path/to/markdown/output
+```
 
 ## Project Structure
 
-```
-my_project/
-├── src/
-│   └── taskmaster_ai/
-│       ├── __init__.py
-│       ├── ai_summarizer.py
-│       ├── pdf_converter.py
-│       └── text_vectorizer.py
-├── scripts/
-│   ├── init_db.sql
-│   └── main.py
-├── data/
-│   ├── pdfs/           # <-- Place your PDF files here
-│   └── processed_markdown/
-├── .gitignore
-├── pyproject.toml
-├── README.md
-└── requirements.txt
+```bash
+DocumentIngestor/
+├── data/ # Data directories for PDFs and markdown files
+├── src/ # Source code
+├── tests/ # Test files
+├── scripts/ # Utility scripts
+├── requirements.txt # Python dependencies
+└── pyproject.toml # Project configuration
 ```
 
-## Setup and Usage
+## Usage
 
-### 1. Prerequisites
-- Python 3.8+
-- PostgreSQL with the `pgvector` extension installed.
-- Tesseract OCR engine (optional, for PDFs with images).
+### Converting PDFs to Markdown
 
-### 2. Installation
+The main functionality is provided by `src/pdf_converter.py`. To convert PDFs:
 
-First, create and activate a virtual environment. Using `uv` is recommended:
-```sh
-# Create the virtual environment
-uv venv
-
-# Activate the environment (PowerShell)
-.venv\Scripts\Activate.ps1
-# Or (bash/zsh)
-# source .venv/bin/activate
+1. Place your PDF files in the input directory specified in your `.env` file
+2. Run the converter:
+```bash
+python src/pdf_converter.py
 ```
 
-Install the project in editable mode. This allows you to run the scripts while also making your package importable.
-```sh
-uv pip install -e .
-```
-This will install all dependencies listed in `pyproject.toml` and `requirements.txt`.
+The converted markdown files will be saved in the output directory specified in your `.env` file.
 
-### 3. Database Setup
-1.  Ensure your PostgreSQL server is running.
-2.  Create a database (e.g., `pdf_documents`).
-3.  Connect to your database and run the `init_db.sql` script to create the necessary table and extension:
-    ```sh
-    psql -d your_db_name -U your_user_name -f scripts/init_db.sql
-    ```
+## Dependencies
 
-### 4. Configure the Pipeline
-Open `scripts/main.py` and update the database connection details in the configuration section:
-```python
-# --- Database Configuration ---
-DB_HOST = "localhost"
-DB_NAME = "pdf_documents"
-DB_USER = "your_user_name"
-DB_PASS = "your_password"
-# -----------------------------
+- PyMuPDF: PDF processing
+- pdfplumber: PDF text extraction
+- transformers: Text processing
+- sentence-transformers: Text embedding
+- psycopg2-binary: PostgreSQL database adapter
+- pytesseract: OCR capabilities
+- Pillow: Image processing
+- python-dotenv: Environment variable management
+
+## Development
+
+### Setting up the development environment
+
+1. Install development dependencies:
+```bash
+pip install -r requirements.txt
 ```
 
-### 5. Running the Pipeline
-1.  Place all the PDF files you want to process into the `data/pdfs/` directory.
-2.  Run the main script from the project root:
-    ```sh
-    python scripts/main.py
-    ```
+2. Configure your environment variables in `.env`
 
-The script will iterate through the PDFs, process them, and store the results in your database.
+### Running tests
+
+```bash
+python -m pytest tests/
+```

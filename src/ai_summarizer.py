@@ -29,7 +29,12 @@ def summarize_with_ollama(text):
     
     {text}
     
-    请使用中文回答
+    必须遵守以下规则：
+    1. 使用中文回答
+    2. 总结内容必须包含所有重要信息
+    3. 总结内容必须简洁明了, 不要出现任何解释性内容
+    4. 总结内容必须符合{SUMMARY_MAX_LENGTH}字以内的要求
+    5. 不需要任何格式，直接输出总结内容
     """ 
     
     payload = {
@@ -52,7 +57,7 @@ def summarize_with_ollama(text):
         output_summary = re.sub(pattern, '', summary, flags=re.DOTALL)
         
         # 再次确保摘要长度不超过限制
-        return output_summary[:SUMMARY_MAX_LENGTH]
+        return output_summary
 
     except requests.exceptions.RequestException as e:
         print(f"Error calling Ollama API:")
