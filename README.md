@@ -18,30 +18,34 @@ A Python-based document processing system that converts PDF documents to markdow
 ## Installation
 
 1. Clone the repository:
-```bash
-git clone [repository-url]
-cd DocumentIngestor
-```
+
+    ```bash
+    git clone [repository-url]
+    cd DocumentIngestor
+    ```
 
 2. Create and activate a virtual environment:
-```bash
-python -m venv .venv
-# On Windows
-.venv\Scripts\activate
-# On Unix or MacOS
-source .venv/bin/activate
-```
+
+    ```bash
+    python -m venv .venv
+    # On Windows
+    .venv\Scripts\activate
+    # On Unix or MacOS
+    source .venv/bin/activate
+    ```
 
 3. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 4. Create a `.env` file in the project root with the following variables:
-```env
-PDF_INPUT_DIRECTORY=path/to/pdf/input
-MARKDOWN_OUTPUT_DIRECTORY=path/to/markdown/output
-```
+
+    ```env
+    PDF_INPUT_DIRECTORY=path/to/pdf/input
+    MARKDOWN_OUTPUT_DIRECTORY=path/to/markdown/output
+    ```
 
 ## Project Structure
 
@@ -62,10 +66,12 @@ DocumentIngestor/
 The main functionality is provided by `src/pdf_converter.py`. To convert PDFs:
 
 1. Place your PDF files in the input directory specified in your `.env` file
+
 2. Run the converter:
-```bash
-python src/pdf_converter.py
-```
+
+    ```bash
+    python src/pdf_converter.py
+    ```
 
 The converted markdown files will be saved in the output directory specified in your `.env` file.
 
@@ -85,9 +91,10 @@ The converted markdown files will be saved in the output directory specified in 
 ### Setting up the development environment
 
 1. Install development dependencies:
-```bash
-pip install -r requirements.txt
-```
+
+    ```bash
+    pip install -r requirements.txt
+    ```
 
 2. Configure your environment variables in `.env`
 
